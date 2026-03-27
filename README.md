@@ -6,6 +6,12 @@ Skills are stored as `SKILL.md` files under `skills/<skill-name>/`
 
 ## Installation
 
+### Project (Install to current project)
+```bash
+npx skills add infitx-org/agent-skills -s '*'
+```
+
+### Global (Install to user directory instead of project)
 ```bash
 npx skills add infitx-org/agent-skills -g -s '*'
 ```
