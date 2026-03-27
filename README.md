@@ -16,6 +16,8 @@ npx skills add infitx-org/agent-skills -s '*'
 npx skills add infitx-org/agent-skills -g -s '*'
 ```
 
+Refer this [Documentation](https://github.com/vercel-labs/skills?tab=readme-ov-file#skills) for all commands
+
 ## Available Skills
 
 ### `addon-creator`
