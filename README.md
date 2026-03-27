@@ -4,6 +4,12 @@ A collection of agent skills providing domain-specific knowledge for working wit
 
 Skills are stored as `SKILL.md` files under `skills/<skill-name>/`
 
+## Installation
+
+```bash
+npx skills add infitx-org/agent-skills -g -s '*'
+```
+
 ## Available Skills
 
 ### `addon-creator`
