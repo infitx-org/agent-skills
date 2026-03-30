@@ -4,6 +4,8 @@ A collection of agent skills providing domain-specific knowledge for working wit
 
 Skills are stored as `SKILL.md` files under `skills/<skill-name>/`
 
+Learn more about what skills are and how they work in the [Agent Skills documentation](https://agentskills.io/what-are-skills).
+
 ## Installation
 
 ### Project (Install to current project)
@@ -46,3 +48,17 @@ Use this skill when:
 - Consolidating addon configuration for better isolation
 
 The skill guides migration from the deprecated flat `app-yamls/` + `default.yaml` structure to the modular per-app structure.
+
+### `ml-logging-linter`
+
+**Description:** Scans JS/TS files for Mojaloop logging rule violations and produces a report with fix suggestions.
+
+Use this skill when:
+
+- Auditing JS/TS code for logging quality
+- Reviewing logging practices across a Mojaloop service
+- Checking if log statements follow standards (error handling, trace context, log levels, sensitive data, OTel attributes)
+- Preparing a PR that touches logging code
+- Assessing logging hygiene in any Mojaloop/PM4ML codebase
+
+The skill uses LLM-powered semantic analysis rather than AST parsing, complementing the ESLint plugin used for CI enforcement.
