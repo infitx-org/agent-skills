@@ -1,0 +1,45 @@
+{
+  "skill_name": "ml-logging-linter",
+  "evals": [
+    {
+      "id": 1,
+      "name": "single-file-scan",
+      "prompt": "/ml-logging-linter evals/fixtures/bulkTransfer-index.js",
+      "expected_output": "Structured violation report with table, fix suggestions, and summary for bulkTransfer/index.js",
+      "files": ["evals/fixtures/bulkTransfer-index.js"],
+      "expectations": [
+        "Report contains a violations table with Line, Severity, Rule, Issue columns",
+        "Detects deprecated-logger if uppercase Logger variable is used",
+        "Fix suggestions use lowercase logger, never uppercase Logger",
+        "Fix suggestions never include err.message in log calls",
+        "Report ends with a summary line showing error and warning counts"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "mixed-pattern-file",
+      "prompt": "/ml-logging-linter evals/fixtures/transfers-handler.js",
+      "expected_output": "Detailed violation report for a large file with mixed Logger/logger patterns, child loggers, and error handling",
+      "files": ["evals/fixtures/transfers-handler.js"],
+      "expectations": [
+        "Detects deprecated-logger for uppercase Logger usage",
+        "Detects losing-error-stack for err.message interpolation patterns",
+        "Groups related violations on the same line into single table rows",
+        "Provides diff-format fix suggestions",
+        "Does not flag correct logger.child() usage as a violation"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "severity-filter",
+      "prompt": "/ml-logging-linter evals/fixtures/bulkTransfer-index.js only errors",
+      "expected_output": "Filtered report showing only Error-severity violations, no warnings",
+      "files": ["evals/fixtures/bulkTransfer-index.js"],
+      "expectations": [
+        "Report only shows Error-severity violations, no Warning rows in the table",
+        "Still produces a valid violations table with correct columns",
+        "Summary line reflects filtered results (errors only, 0 warnings or warnings omitted)"
+      ]
+    }
+  ]
+}
