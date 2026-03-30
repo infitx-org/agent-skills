@@ -118,10 +118,20 @@ const { values: rawOpts } = parseArgs({
   strict: true,
 });
 
+const parseEvalId = (raw: string | undefined): number | null => {
+  if (raw == null) return null;
+  const n = Number(raw);
+  if (!Number.isInteger(n)) {
+    log(`Error: --eval-id must be an integer, got "${raw}"`);
+    process.exit(1);
+  }
+  return n;
+};
+
 const cliOpts = Object.freeze({
   model: rawOpts.model ?? null,
   graderModel: rawOpts['grader-model'] ?? 'haiku',
-  evalId: rawOpts['eval-id'] != null ? Number(rawOpts['eval-id']) : null,
+  evalId: parseEvalId(rawOpts['eval-id']),
   skipGrading: rawOpts['skip-grading'] ?? false,
 }) satisfies CliOptions;
 
@@ -151,8 +161,14 @@ const spawnClaude = async ({
 };
 
 const extractReport = (rawJson: string): string => {
-  const parsed = JSON.parse(rawJson);
-  return parsed.result ?? parsed.text ?? JSON.stringify(parsed);
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(rawJson);
+  } catch {
+    const snippet = rawJson.slice(0, 200);
+    throw new Error(`Failed to parse claude CLI output as JSON: ${snippet}`);
+  }
+  return (parsed.result as string) ?? (parsed.text as string) ?? JSON.stringify(parsed);
 };
 
 const formatDuration = (ms: number): string => `${Math.round(ms / 1_000)}s`;
